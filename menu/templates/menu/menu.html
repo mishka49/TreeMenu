@@ -1,5 +1,10 @@
 <ul>
-{% for item in menu_items %}
-    <li><a href="{{ item.url }}">{{ item.name }}</a></li>
-{% endfor %}
+    {% for key, value in menu_items.items %}
+        <li>
+            <a href="{{ key.url }}">{{ key.name }}</a>
+            {% if value.items %}
+                {% include 'menu/menu.html' with menu_items=value %}
+            {% endif %}
+        </li>
+    {% endfor %}
 </ul>
