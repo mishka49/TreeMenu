@@ -12,4 +12,5 @@ def draw_menu(menu_name):
     print(f"TREE MENU: {tree_menu_items}")
     return {
         "menu_items": tree_menu_items,
+        "active": 'block',
     }

@@ -1,10 +1,35 @@
 <ul>
     {% for key, value in menu_items.items %}
         <li>
-            <a href="{{ key.url }}">{{ key.name }}</a>
+            {% if key.url %}
+                <a href={{ key.url }}>{{ key.name }}</a>
+            {% else %}
+                <a>{{ key.name }}</a>
+            {% endif %}
+
             {% if value.items %}
-                {% include 'menu/menu.html' with menu_items=value %}
+                {% include 'menu/menu.html' with menu_items=value%}
             {% endif %}
         </li>
     {% endfor %}
 </ul>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var menuItems = document.querySelectorAll('li');
+        menuItems.forEach(function (menuItem) {
+            menuItem.addEventListener('click', function (event) {
+                event.stopPropagation();
+                var subMenu = this.querySelector('ul');
+                console.log("SUBMENU", subMenu)
+                if (subMenu.style.display === 'none' || subMenu.style.display === '') {
+                    console.log("Block")
+                    subMenu.style.display = 'block';
+                } else {
+                    console.log('None')
+                    subMenu.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
