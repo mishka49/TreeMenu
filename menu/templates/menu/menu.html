@@ -1,3 +1,4 @@
+{% load common_tags %}
 <ul>
     {% for key, value in menu_items.items %}
         <li>
@@ -7,29 +8,10 @@
                 <a>{{ key.name }}</a>
             {% endif %}
 
-            {% if value.items %}
+            {% is_contain_active_item value request.path as is_contain %}
+            {% if is_contain %}
                 {% include 'menu/menu.html' with menu_items=value%}
             {% endif %}
         </li>
     {% endfor %}
 </ul>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var menuItems = document.querySelectorAll('li');
-        menuItems.forEach(function (menuItem) {
-            menuItem.addEventListener('click', function (event) {
-                event.stopPropagation();
-                var subMenu = this.querySelector('ul');
-                console.log("SUBMENU", subMenu)
-                if (subMenu.style.display === 'none' || subMenu.style.display === '') {
-                    console.log("Block")
-                    subMenu.style.display = 'block';
-                } else {
-                    console.log('None')
-                    subMenu.style.display = 'none';
-                }
-            });
-        });
-    });
-</script>

@@ -1,6 +1,6 @@
 from django import template
 from menu.models import MenuItem
-from menu.services import menu_to_dict
+from menu.services import menu_to_dict, is_contain_url
 
 register = template.Library()
 
@@ -14,3 +14,9 @@ def draw_menu(menu_name):
         "menu_items": tree_menu_items,
         "active": 'block',
     }
+
+
+@register.simple_tag
+def is_contain_active_item(item, url):
+    result = is_contain_url(item, url)
+    return result
