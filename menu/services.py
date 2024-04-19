@@ -18,13 +18,23 @@ def menu_to_dict(menu_items: MenuItem, parent_item=None):
 def is_contain_url(child_items, url):
     result = False
     print("Child_items", child_items)
+    print("URL:", url)
     if child_items is None:
         return result
 
     for key, value in child_items.items():
-        if key.url == url:
+        print(key.url, url)
+        if compare_urls(key.url, url):
+            print("RETURN TRUE")
             return True
 
         result = is_contain_url(value, url)
 
+    print("IS_Contain", result)
     return result
+
+def compare_urls(url1, url2):
+    url1 = set(url1.split('/'))
+    url2 = set(url2.split('/'))
+
+    return url1.issubset(url2)

@@ -1,7 +1,7 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from menu import views
 
 urlpatterns=[
-    path('', views.show_menu)
+    re_path(r'', views.show_menu),
 ]

@@ -8,9 +8,11 @@
                 <a>{{ key.name }}</a>
             {% endif %}
 
-            {% is_contain_active_item value request.path as is_contain %}
-            {% if is_contain %}
-                {% include 'menu/menu.html' with menu_items=value%}
+            {% is_contain_active_item value request.scheme|add:"://"|add:request.get_host|add:request.path as is_contain %}
+            {% is_urls_same key.url request.scheme|add:"://"|add:request.get_host|add:request.path as is_same%}
+
+            {% if is_same or is_contain %}
+                {% include 'menu/menu.html' with menu_items=value %}
             {% endif %}
         </li>
     {% endfor %}
