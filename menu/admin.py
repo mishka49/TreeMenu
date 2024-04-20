@@ -10,10 +10,17 @@ class MenuItemAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "parent_item":
-            print(kwargs.items())
-            kwargs["queryset"] = MenuItem.objects.filter(menu__name="Основное")
-
+            if request.resolver_match.args:
+                menu_id = MenuItem.objects.get(id=request.resolver_match.args[0]).menu.id
+                kwargs["queryset"] = MenuItem.objects.filter(menu__id=menu_id)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    # def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    #     if db_field.name == "parent_item":
+    #         print(kwargs.items())
+    #         kwargs["queryset"] = MenuItem.objects.filter(menu__name="Основное")
+    #
+    #     return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(Menu)
